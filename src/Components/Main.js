@@ -14,18 +14,17 @@ import { connect } from "react-redux";
 
 //importing reducers
 import {
-    fetchDivers, fetchTracks
+    fetchDivers
 } from "../redux/ActionCreators";
 
 const mapDispatchToProps = {
     fetchDivers: () => fetchDivers(),
-    fetchTracks: () => fetchTracks(),
+
 }
 
 class Main extends Component {
     componentDidMount() {
         this.props.fetchDivers();
-        this.props.fetchTracks();
     }
 
     render() {

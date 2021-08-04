@@ -81,15 +81,15 @@ export const updateDiversStat = (newData) => (dispatch) => {
             throw error;
         }
     )
-    // .then((response) => response.json())
-    // .then(dispatch(changeDiversStat(newObject)))
-    // .catch((error) => {
-    //     console.log("update divers stat", error.message);
-    //     alert(
-    //         "the divers statistics could not be updated \nError: " +
-    //             error.message
-    //     );
-    // });
+    .then((response) => response.json())
+    .then(dispatch(changeDiversStat(newObject)))
+    .catch((error) => {
+        console.log("update divers stat", error.message);
+        alert(
+            "the divers statistics could not be updated \nError: " +
+                error.message
+        );
+    });
 }
 
 

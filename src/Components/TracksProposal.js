@@ -65,8 +65,133 @@ class TracksProposal extends Component {
             this.toggle();
         }
         this.props.divers.divers.map((diver) => {
+            //Find the index of this diver in the array tracksPersons that is in the store
+            const i = this.props.tracksPersons.tracksPersons.findIndex(
+                (pair) => pair.diver === diver.surname
+            );
+
+            //Determine the track at this index(which is the track of this diver)
+            const theTrack = this.props.tracksPersons.tracksPersons[i].track
+
+            // Change data depending on the track in the input box
+            if(theTrack !== "") {
+                switch (theTrack) {
+                    case "D/S":
+                        diver.numberOfShow += 1;
+                        diver.numberOfDry += 1;
+                        diver.numberOfdeck += 1;
+                        break;
+                    case "C":
+                        diver.numberOfShow += 1;
+                        diver.numberOfDry += 1;
+                        diver.numberOfconsole += 1;
+                        break;
+                
+                    case "CR":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfdcr += 1;
+                        break;
+                    case "R1":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfr1 += 1;
+                        break;
+                    case "R2":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfr2 += 1;
+                        break;
+                    
+                    case "CL":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfdcl += 1;
+                        break;
+                    case "L1":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfl1 += 1;
+                        break;
+                    case "L2":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfl2 += 1;
+                        break;
+                    case "FR":
+                        diver.numberOfShow += 1;
+                        diver.numberOfDry += 1;
+                        diver.numberOffr += 1;
+                        break;
+                    case "FL":
+                        diver.numberOfShow += 1;
+                        diver.numberOfDry += 1;
+                        diver.numberOffl += 1;
+                        break;
+                    case "FC":
+                        diver.numberOfShow += 1;
+                        diver.numberOfDry += 1;
+                        diver.numberOfconsole += 1;
+                        break;
+                    case "FCR":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfdcr += 1;
+                        break;
+                    case "FR2":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfr2 += 1;
+                        break;
+                    case "FR1":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfr1 += 1;
+                        break;
+                    case "FCL":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfdcl += 1;
+                        break;
+                    case "FL2":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfl2 += 1;
+                        break;
+                    case "FL1":
+                        diver.numberOfShow += 1;
+                        diver.numberOfWet += 1;
+                        diver.numberOfl1 += 1;
+                        break;
+                    case "FFR":
+                        diver.numberOfShow += 1;
+                        diver.numberOfDry += 1;
+                        diver.numberOffr += 1;
+                        break;
+                    case "FFR":
+                        diver.numberOfShow += 1;
+                        diver.numberOfDry += 1;
+                        diver.numberOffl += 1;
+                        break;
+                }
+            }
+
+            diver.perCentOfWet = diver.numberOfWet / diver.numberOfShow;
+            diver.perCentOfDry = diver.numberOfDry / diver.numberOfShow;
+            diver.perCentOfconsole = diver.numberOfconsole / diver.numberOfShow;
+            diver.perCentOfdcr = diver.numberOfdcr / diver.numberOfShow;
+            diver.perCentOfr1 = diver.numberOfr1 / diver.numberOfShow;
+            diver.perCentOfr2 = diver.numberOfr2 / diver.numberOfShow;
+            diver.perCentOfdcl = diver.numberOfdcl / diver.numberOfShow;
+            diver.perCentOfl1 = diver.numberOfl1 / diver.numberOfShow;
+            diver.perCentOfl2 = diver.numberOfl2 / diver.numberOfShow;
+            diver.perCentOffr = diver.numberOffr / diver.numberOfShow;
+            diver.perCentOffl = diver.numberOffl / diver.numberOfShow;
+            diver.perCentOfdeck = diver.numberOfdeck / diver.numberOfShow;
+
+            // Create an object diver to give to fetch with new data
             const newData = {
-                "id": diver.id,
+                "_id": diver._id,
                 "firstName": diver.firstName,
                 "lastName": diver.lastName,
                 "surname": diver.surname,
@@ -87,7 +212,7 @@ class TracksProposal extends Component {
                 "fr": diver.fr,
                 "fl": diver.fl,
                 "deck": diver.deck,
-                "numberOfWet": 99999999,
+                "numberOfWet": diver.numberOfWet,
                 "numberOfDry": diver.numberOfDry,
                 "numberOfShow": diver.numberOfShow,
                 "numberOfconsole": diver.numberOfconsole,
