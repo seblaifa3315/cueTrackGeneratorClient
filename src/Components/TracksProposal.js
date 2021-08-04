@@ -265,10 +265,14 @@ class TracksProposal extends Component {
         ));
 
         //Create a full column of track assigned to each corresponding diver
+        console.log("rrrrrrrrrr")
+        console.log(this.props.tracksPersons.tracksPersons)
         const trackAssigned = this.props.divers.divers.map((diver) => {
             const index = this.props.tracksPersons.tracksPersons.findIndex(
                 (person) => person.diver === diver.surname
             );
+            console.log('index')
+            console.log({index})
             const tracksPersonsCopy = [
                 ...this.props.tracksPersons.tracksPersons,
             ];

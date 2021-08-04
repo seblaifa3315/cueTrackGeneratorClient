@@ -307,8 +307,10 @@ class Presence extends Component {
         dayCrew.map((diver) =>
             tracksPersons.push({ diver: `${diver.surname}`, track: "" })
         );
-
+        console.log("tracksPersons")
+        console.log(tracksPersons)
         this.props.whoDoesWhat(tracksPersons)
+        
     }
 
 
