@@ -30,7 +30,7 @@ class TracksConfirmed extends Component {
                 <thead>
                 <tr>
                     <th>Divers</th>
-                    <th>1st show</th>
+                    <th>Tracks</th>
                     <th>2nd show</th>
                 </tr>
                 </thead>
@@ -39,19 +39,19 @@ class TracksConfirmed extends Component {
                 <tr>
                     <th scope="row">Jason</th>
                     <td>CR</td>
-                    <td>FL</td>
+
 
                 </tr>
                 <tr>
                     <th scope="row">Patrick</th>
                     <td>C</td>
-                    <td>CL</td>
+
 
                 </tr>
                 <tr>
                     <th scope="row">Jakob</th>
                     <td>D/S</td>
-                    <td>CR</td>
+
 
                 </tr>
                 </tbody>

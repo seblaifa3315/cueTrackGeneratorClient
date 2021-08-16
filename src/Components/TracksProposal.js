@@ -168,7 +168,7 @@ class TracksProposal extends Component {
                         diver.numberOfDry += 1;
                         diver.numberOffr += 1;
                         break;
-                    case "FFR":
+                    case "FFL":
                         diver.numberOfShow += 1;
                         diver.numberOfDry += 1;
                         diver.numberOffl += 1;
@@ -197,8 +197,6 @@ class TracksProposal extends Component {
                 "surname": diver.surname,
                 "supervisor": diver.supervisor,
                 "lead": diver.lead,
-                "day": diver.day,
-                "night": diver.night,
                 "hiringYear": diver.hiringYear,
                 "presence": diver.presence,
                 "canDive": diver.canDive,
@@ -227,7 +225,6 @@ class TracksProposal extends Component {
                 "numberOfdeck": diver.numberOfdeck,
                 "perCentOfWet": diver.perCentOfWet,
                 "perCentOfDry": diver.perCentOfDry,
-                "perCentOfShow": diver.perCentOfShow,
                 "perCentOfconsole": diver.perCentOfconsole,
                 "perCentOfdcr": diver.perCentOfdcr,
                 "perCentOfr1": diver.perCentOfr1,
@@ -241,6 +238,7 @@ class TracksProposal extends Component {
                 "tracksKnown": diver.tracksKnown,
                 "tracksUnknown": diver.tracksUnknown
             }
+            console.log(newData)
 
             this.props.updateDiversStat(newData);
         })
@@ -261,18 +259,16 @@ class TracksProposal extends Component {
     render() {
         // All divers list
         const allDiversList = this.props.divers.divers.map((diver) => (
-            <p key={diver.id}>{diver.surname}</p>
+            <p key={diver.id} className="hello">{diver.surname}</p>
         ));
 
         //Create a full column of track assigned to each corresponding diver
-        console.log("rrrrrrrrrr")
-        console.log(this.props.tracksPersons.tracksPersons)
+        
         const trackAssigned = this.props.divers.divers.map((diver) => {
             const index = this.props.tracksPersons.tracksPersons.findIndex(
                 (person) => person.diver === diver.surname
             );
-            console.log('index')
-            console.log({index})
+
             const tracksPersonsCopy = [
                 ...this.props.tracksPersons.tracksPersons,
             ];
@@ -329,6 +325,14 @@ class TracksProposal extends Component {
             to= "/presence/tracksProposal/TracksConfirmed"
         }
 
+        let updateOrNotUpdate = () => {
+            if(!this.hasDuplicate()) {
+                this.handleOnClick()
+            } else {
+                this.toggle();
+            }
+        }
+
         //Component return
         return (
             <div className="tracksProposalContainer">
@@ -336,7 +340,7 @@ class TracksProposal extends Component {
 
                 <Form>
                     <div className="row ola">
-                        <Col sm={1} className="col">
+                        <Col sm={1} className="col hey">
                             {allDiversList}
                         </Col>
                         <Col sm={1} className="col">
@@ -347,7 +351,7 @@ class TracksProposal extends Component {
                     <Link to={to}>
                         <Button
                             className="tracksConfirmed"
-                            onClick={this.handleOnClick}
+                            onClick={updateOrNotUpdate}
                         >
                             Submit
                         </Button>

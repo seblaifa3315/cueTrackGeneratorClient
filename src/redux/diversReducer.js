@@ -26,7 +26,7 @@ export const Divers = (
             );
             const newArray = [...state.divers];
 
-            newArray[index].night = !newArray[index].night;
+            newArray[index].day = !newArray[index].day;
 
             return {
                 ...state,
