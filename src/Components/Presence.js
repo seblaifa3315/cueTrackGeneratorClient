@@ -81,55 +81,95 @@ class Presence extends Component {
         const poolOfDivers = this.props.divers.divers.filter(
             (diver) => diver.day === false && diver.supervisor === false && diver.lead === false
         );
-
-        
-        // if the poolOfDiver is less than 10 divers
-        if (poolOfDivers.length < 9) {
-            poolOfDivers.push(this.props.divers.divers.filter(diver => diver.day === false && diver.lead === true)[0]);
-            poolOfDivers.push(this.props.divers.divers.filter(diver => diver.day === false && diver.supervisor === true)[0])
-        }
-
-        if (poolOfDivers.length < 10) {
-            poolOfDivers.push(this.props.divers.divers.filter(diver => diver.day === false && diver.lead === true)[0])
-        }
         
         //Handle D/S
-            //If Supervisor and lead in the poolOfDivers
-            if(poolOfDivers.filter(diver => diver.lead || diver.supervisor).length === 2) {
-                // assign D/S to supervisor (don't need to do anything)
-                // remove the supervisor from the poolOfDivers
-                poolOfDivers.splice(
-                    poolOfDivers.findIndex((diver) => diver.supervisor === true),
-                    1
-                );
-            }
-
-            //If only lead is in the poolOfDivers
-            if(poolOfDivers.filter(diver => diver.lead || diver.supervisor).length === 1) {
-                // assign D/S to lead
-                const deckGuy = poolOfDivers.filter(diver => diver.lead === true)[0].surname
+            let deckGuy;
+            let objDeck;
+            //If poolOfDivers is 9 add assign D/S to the lead night
+            if(poolOfDivers.length === 9) {
+                //check if lead is present
+                const lead = this.props.divers.divers.filter((diver) => diver.day === false  && diver.lead === true);
+                if(lead.length > 0) {
+                    deckGuy = lead[0].surname
+                    objDeck = { diver: `${deckGuy}`, track: "D/S" };
+                    tracksPersons.push(objDeck);
+                    console.log(`D/S: ${deckGuy}`);
+                }
+            //If at least 10 divers in the poolOfDivers assign D/S to the most wet
+            } else if (poolOfDivers.length > 9) {
+                const deck = poolOfDivers.filter((diver) => diver.deck === true);
+                const sortedDeck = deck.sort((a, b) =>
+                a.perCentOfDry > b.perCentOfDry
+                ? 1
+                : a.perCentOfDry === b.perCentOfDry
+                ? a.perCentOfdeck > b.perCentOfdeck
+                ? 1
+                : -1
+                : -1);
+                deckGuy = sortedDeck[0].surname;
+                objDeck = { diver: `${deckGuy}`, track: "D/S" };
+                tracksPersons.push(objDeck);
+                console.log(`D/S: ${deckGuy}`);
                 // remove the deckGuy from the poolOfDivers
                 poolOfDivers.splice(
                     poolOfDivers.findIndex((diver) => diver.surname === deckGuy),
                     1
                 );
-
+                console.log("after removing deckGuy:")
+                console.log(poolOfDivers)
             }
+            console.log("tracksPersons Array:")
+            console.log(tracksPersons.map(el => el.surname));
+                
+            
+            
+        //Handle FL
+        const fl = poolOfDivers.filter((diver) => diver.fl === true);
+        const sortedFl = fl.sort((a, b) =>
+                a.perCentOfDry > b.perCentOfDry
+                ? 1
+                : a.perCentOfDry === b.perCentOfDry
+                ? a.perCentOffl > b.perCentOffl
+                ? 1
+                : -1
+                : -1);
 
-            //If no supervisor or lead in the poolOfDivers
-            if(poolOfDivers.filter(diver => diver.lead || diver.supervisor).length === 0) {
-                // assign D/S to the most wet person
-                const deck = poolOfDivers.filter((diver) => diver.deck === true);
-                const sortedDeck = deck.sort((a, b) =>
-                    a.perCentOfWet > b.perCentOfWet
-                    ? 1
-                    : a.perCentOfWet === b.perCentOfWet
-                    ? a.perCentOfdeck > b.perCentOfdeck
-                    ? 1
-                    : -1
-                    : -1
+        const flGuy = sortedFl[0].surname;
+        const objFl = { diver: `${flGuy}`, track: "FL" };
+        tracksPersons.push(objFl);
+        console.log(`FL: ${flGuy}`);
+                // remove the deckGuy from the poolOfDivers
+                poolOfDivers.splice(
+                    poolOfDivers.findIndex((diver) => diver.surname === flGuy),
+                    1
                 );
-            }
+                console.log("after removing flGuy:")
+                console.log(poolOfDivers.map(el => el.surname))
+
+        //Handle FR
+        const fr = poolOfDivers.filter((diver) => diver.fr === true);
+        const sortedFr = fr.sort((a, b) =>
+                a.perCentOfDry > b.perCentOfDry
+                ? 1
+                : a.perCentOfDry === b.perCentOfDry
+                ? a.perCentOffr > b.perCentOffr
+                ? 1
+                : -1
+                : -1);
+
+        const frGuy = sortedFr[0].surname;
+        const objFr = { diver: `${frGuy}`, track: "FR" };
+        tracksPersons.push(objFr);
+        console.log(`FR: ${frGuy}`);
+                // remove the deckGuy from the poolOfDivers
+                poolOfDivers.splice(
+                    poolOfDivers.findIndex((diver) => diver.surname === frGuy),
+                    1
+                );
+                console.log("after removing frGuy:")
+                console.log(poolOfDivers.map(el => el.surname))
+
+        
         
         this.props.whoDoesWhat(tracksPersons)
         
